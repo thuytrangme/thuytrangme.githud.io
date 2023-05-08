@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATTT hàm Băm-Chữ ký số</title>
+    <link rel="shortcut icon" href="../image/sonnees.png" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/div.css">
+    <script src="../js/attt.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+
+<body style="background-color: #efefef;">
+    <div class="fixed">
+        <a style="font-size: 12px;" href="#index1">1. Hàm băm CRC32</a> <br>
+        <a style="font-size: 12px;" href="#index2">2. Hàm băm SHA-1</a><br>
+        <a style="font-size: 12px;" href="#index3">3. Hàm băm MD5</a><br>
+        <a style="font-size: 12px;" href="#index4">4. Chữ ký số RSASSA-PKCS1-v1_5</a><br>
+        <a style="font-size: 12px;" href="#index5">5. Kiểm tra tin nhắn chính chủ</a><br>
+    </div>
+    <div class="container" style="width: 60%; height: 2000px;">
+        <div class="div" style=" height: 230px; border-radius: 0px 0px 5px 5px ;">
+            <h4 style="text-align: center;">AN TOÀN THÔNG TIN </h4>
+            
+            <table style="width: 50%; margin-top: 40px; margin-left: 50px; ">
+                <tr>
+                    <td><i>Hướng dẫn:</i></td>
+                    <td>TS. Ngô Hữu Dũng</td>
+                </tr>
+                <tr>
+                    <td><i>Bài làm:</i></td>
+                    <td>Nguyễn Văn Sơn</td>
+                </tr>
+                <tr>
+                    <td><i>Source code:</i></td>
+                    <td><a href="https://github.com/sonnees/ATTT">https://github.com/sonnees/ATTT</a></td>
+                </tr>
+                <tr>
+                    <td><i>GitHub Pages:</i></td>
+                    <td><a href="https://sonnees.github.io/ATTT">https://sonnees.github.io/ATTT</a></td>
+                </tr>
+            </table>
+           
+        </div>
+        <div class="div" style=" height: 380px;">
+            <a name="index1"><h5>1. Hàm băm CRC32</h5></a>
+            <ul>
+                <li>Tính toán nhanh: CRC32 là một thuật toán tính toán nhanh, phổ biến trong các ứng dụng yêu cầu tốc độ xử lý cao.</li>
+                <li>Chu kỳ ngắn: CRC32 có chu kỳ ngắn, giúp phát hiện và phân biệt các lỗi trong dữ liệu nhanh chóng.</li>
+                <li>Không đảo ngược: Không thể đảo ngược để phục hồi lại dữ liệu gốc từ giá trị băm CRC32.</li>
+                <li>Đơn chiều: CRC32 là một hàm băm đơn chiều, chỉ được sử dụng để so sánh giá trị băm của dữ liệu gốc với giá trị băm của dữ liệu sau khi được xử lý.</li>
+            </ul>
+            <div class="container mt-5" style="width: 50%;">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputCRC32" placeholder="Nhập mật khẩu">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button" id="CRC32">CRC32</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" id="passwordHashCRC32" placeholder="Mật khẩu băm sẽ hiện ở đây">
+                </form>
+
+            </div>
+        </div>
+        <div class="div" style=" height: 330px;">
+            <a name="index2"><h5>2. Hàm băm SHA-1</h5></a>
+            <ul>
+                <li>Độ dài đầu ra cố định: Giá trị băm SHA-1 có độ dài cố định là 160 bit (20 byte).</li>
+                <li>Li độ tin cậy: SHA-1 được coi là đáng tin cậy trong quá khứ, nhưng hiện nay đã không được khuyến cáo sử dụng do các lỗ hổng bảo mật đã được phát hiện và không an toàn trong một số trường hợp.</li>
+            </ul>
+            <div class="container mt-5" style="width: 70%;">
+
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputSHA-1" placeholder="Nhập mật khẩu">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button" id="SHA-1">SHA-1</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="passwordHashSHA-1" placeholder="Mật khẩu băm sẽ hiện ở đây">
+                    </div>
+                    <div style="margin-top: 5px;"></div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="passwordHashSHA-1Length" placeholder="Độ dài của kết quả băm sẽ hiện ở đây ">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="div" style=" height: 390px;">
+            <a name="index3"><h5>3. Hàm băm MD5</h5></a>
+            
+            <ul>
+                <li>Độ dài đầu ra cố định: Giá trị băm MD5 có độ dài cố định là 128 bit (16 byte).</li>
+                <li>Tính đa dạng: MD5 cho kết quả băm có tính đa dạng, nghĩa là những thay đổi nhỏ trong dữ liệu gốc sẽ tạo ra giá trị băm khác nhau.</li>
+                <li>Đã không được khuyến cáo: MD5 cũng không được khuyến cáo sử dụng trong các ứng dụng an ninh, do đã được chứng minh là không an toàn và dễ bị tấn công bằng các phương pháp va chạm (collision attacks).</li>
+            </ul>
+            <div class="container mt-5" style="width: 70%;">
+
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMD5" placeholder="Nhập mật khẩu">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button" id="MD5">MD5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" id="passwordHashMD5" placeholder="Mật khẩu băm sẽ hiện ở đây">
+                </form>
+                <div style="margin-top: 5px;"></div>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="passwordHashMD5Length" placeholder="Độ dài của kết quả băm sẽ hiện ở đây ">
+                </div>
+            </div>
+        </div>
+
+    <script>
+        // hàm băm mật khẩu crc32
+ 
+
+        document.getElementById("SHA-1").addEventListener("click", function() {
+            var password = document.getElementById("inputSHA-1").value;
+            const hash = CryptoJS.SHA1(password);
+            const hash_value = hash.toString(CryptoJS.enc.Hex);
+            document.getElementById("passwordHashSHA-1").value = hash_value;
+            document.getElementById("passwordHashSHA-1Length").value = "Độ dài của kết quả băm (tính bằng bit, length * 4): " + hash_value.length * 4;
+        });
+        document.getElementById("MD5").addEventListener("click", function() {
+            var password = document.getElementById("inputMD5").value;
+            const hash = CryptoJS.MD5(password);
+            const hash_value = hash.toString(CryptoJS.enc.Hex);
+            document.getElementById("passwordHashMD5").value = hash_value;
+            document.getElementById("passwordHashMD5Length").value = "Độ dài của kết quả băm (tính bằng bit, length * 4): " + hash_value.length * 4;
+        });
+    </script>
+</body>
+</html>
+
